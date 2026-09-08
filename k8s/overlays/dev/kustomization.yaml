@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ai-platform-dev
+
+resources:
+  - ../../base
+
+# Dev runs in mock mode: no model server needed, ideal for k3d/minikube.
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: ai-platform-config
+      data:
+        LLM_MOCK: "true"
